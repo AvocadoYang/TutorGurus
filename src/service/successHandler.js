@@ -6,8 +6,8 @@ const header = {
 }
 function successHadle(res, data){
     res.set(header).status(200).send({
-       "status" : "success",
-        "data" : data
+    "status" : "success",
+    "data" : data
     })
 }
 
