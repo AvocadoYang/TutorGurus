@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     },
     email : {
         type : String,
-        required : [ture, "請輸入Email"],
+        required : [true, "請輸入Email"],
         unique : true,
         lowercase : true
     },
@@ -17,11 +17,13 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     role : {
-        type : Number,
+        type : String,
+        enum : ['S', 'T', 'A'],
         select : false
     },
     status : {
-        type : Number
+        type : Number,
+        default : 0,
     }
 },{ versionKey : false});
 
