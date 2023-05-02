@@ -3,6 +3,7 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
 const successHadle = require('../service/successHandler');
+const jwtFn = require('../middleware/auth');
 
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
 
@@ -33,7 +34,8 @@ let userController = {
             password : secretPassword,
             role : 'S',
         })
-        successHadle(res, newUser);
+        jwtFn.jwtGenerating(newUser, 200, res);
+        // successHadle(res, newUser);
     }
 }
 

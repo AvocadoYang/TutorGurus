@@ -5,7 +5,7 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let cors = require('cors');
 require('dotenv').config({path : "./config.env"});
-require('./src/service/mondoConnect')();
+require('./src/service/mongoConnect')();
 
 let app = express();
 
