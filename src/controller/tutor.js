@@ -34,9 +34,9 @@ let tutorController = {
                 role : 'T',
             })
             successHadle(res, newUser);
-        }
-        catch(error){
-            console.log(error)
+        } catch(err){
+            
+            return next(err);
         }
     },
 
@@ -55,7 +55,7 @@ let tutorController = {
             await User.findByIdAndUpdate(user["_id"],{status : 1});
             jwtFn.jwtGenerating(user, 200, res);
         } catch(error){
-            console.log(error);
+            return next(error)
         }
     }, 
 

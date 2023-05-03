@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     password : {
         type : String,
-        require : [true, "請填入帳號"],
+        required : [true, "請填入帳號"],
         select : false
     },
     role : {

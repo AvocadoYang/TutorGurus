@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "lint": "eslint ./*.js",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "start:dev": "NODE_ENV=dev nodemon ./bin/www",
+    "start:production": "NODE_ENV=production node ./bin/www",
+    "start:WinDev": "set NODE_ENV=dev && nodemon ./bin/www",
+    "start:WinProduction": "set NODE_ENV=production && nodemon ./bin/www"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

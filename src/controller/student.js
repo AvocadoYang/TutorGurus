@@ -37,7 +37,7 @@ let userController = {
             successHadle(res, newUser);
         }
         catch(error){
-            console.log(error)
+            return next(error);
         }
     },
 
@@ -56,7 +56,7 @@ let userController = {
             await User.findByIdAndUpdate(user["_id"],{status : 1});
             jwtFn.jwtGenerating(user, 200, res);
         } catch(err){
-            console.log(err);
+            return next(error);
         }
     },
 
