@@ -33,7 +33,7 @@ let tutorController = {
                 password : secretPassword,
                 role : 'T',
             })
-            jwtFn.jwtGenerating(newUser, 200, res);
+            successHadle(res, newUser);
         }
         catch(error){
             console.log(error)
@@ -57,6 +57,11 @@ let tutorController = {
         } catch(error){
             console.log(error);
         }
-    } 
+    }, 
 
+    async logOut(req, res, next){
+        findUser = await User.findOne()
+    }
 }
+
+module.exports = tutorController;

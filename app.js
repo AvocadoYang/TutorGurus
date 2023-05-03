@@ -4,8 +4,10 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let cors = require('cors');
+require('./src/errorHandler/processError')();
 require('dotenv').config({path : "./config.env"});
 require('./src/service/mongoConnect')();
+
 
 let app = express();
 
