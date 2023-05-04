@@ -53,7 +53,7 @@ let tutorController = {
             if(!auth)
                 return next(customiError(400,"密碼錯誤！"));
             await User.findByIdAndUpdate(user["_id"],{status : 1});
-            jwtFn.jwtGenerating(user, 200, res);
+            jwtFn.jwtGenerating(user, res);
         } catch(error){
             return next(error)
         }
@@ -61,6 +61,31 @@ let tutorController = {
 
     async logOut(req, res, next){
         findUser = await User.findOne()
+    },
+
+    async editInfo(req, res, next){
+        try{
+            let { name, email } = req.body;
+            if(!name || !email ){
+                return next(customiError(400, "必填欄位不得為空"));
+            }
+            let emailCheck = await User.findOne({"email" : email})
+            if(emailCheck)
+                return next(customiError(400, "該信箱已被註冊"));
+            if(!validator.isEmail(email)){
+                return next(customiError(400, "信箱格式錯誤"));
+            }
+            console.log(await User.findOne({"_id" : req.user._id}))
+            let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
+                $set : {
+                    name :  name,
+                    email : email,
+                }
+            });
+            successHandle(res, replaceData);
+        } catch(err) {
+            return next(customiError(400, err));
+        }
     }
 }
 

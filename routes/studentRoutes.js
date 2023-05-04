@@ -9,6 +9,8 @@ router.post('/v1/register', studentController.studentSignUp);
 
 router.post('/v1/login', studentController.logIn);
 
+router.patch('/v1/profile', jwtFn.isAuth, studentController.editInfo);
+
 
 
 

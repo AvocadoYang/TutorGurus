@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     email : {
         type : String,
         required : [true, "請輸入Email"],
-        unique : true,
         lowercase : true
     },
     password : {
