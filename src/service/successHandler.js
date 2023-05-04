@@ -4,12 +4,13 @@ const header = {
     'Access-Control-Allow-Methods': 'PATCH, POST, GET,OPTIONS,DELETE',
     'Content-Type': 'application/json'
 }
-function successHadle(res, data){
-    res.set(header).status(200).send({
+function successHandle(res, data){
+    res.set(header)
+    res.status(200).send({
     "status" : "success",
     "data" : data
     })
 }
 
 
-module.exports = successHadle
+module.exports = successHandle

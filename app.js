@@ -37,9 +37,8 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  console.log(555555)
   //dev
-  if(process.env.NODE_ENV === "dev"){
+  if(process.env.NODE_ENV.trim() === "dev"){
     return envError.devError(err, res);
   }
   //production

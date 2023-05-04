@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
-const successHadle = require('../service/successHandler');
+const successHandle = require('../service/successHandler');
 const jwtFn = require('../middleware/auth');
 
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
@@ -34,7 +34,7 @@ let userController = {
                 password : secretPassword,
                 role : 'S',
             })
-            successHadle(res, newUser);
+            successHandle(res, newUser);
         }
         catch(error){
             return next(error);
@@ -46,7 +46,7 @@ let userController = {
             const { email, password} = req.body;
             console.log(req.body)
             if(!email || !password){
-                return next(customiError(400,"無此帳號或密碼"));
+                return next(customiError(400,"請輸入完整帳號和密碼"));
             }
             const user = await User.findOne({"email" : email}).select("+password");
             const auth = await bcrypt.compare(password, user.password);
@@ -54,14 +54,35 @@ let userController = {
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
             }
             await User.findByIdAndUpdate(user["_id"],{status : 1});
-            jwtFn.jwtGenerating(user, 200, res);
+            jwtFn.jwtGenerating(user, res);
         } catch(err){
-            return next(error);
+            return next(err);
         }
     },
 
     async editInfo(req, res, next){
-        
+        try{
+            let { name, email } = req.body;
+            if(!name || !email ){
+                return next(customiError(400, "必填欄位不得為空"));
+            }
+            let emailCheck = await User.findOne({"email" : email})
+            if(emailCheck)
+                return next(customiError(400, "該信箱已被註冊"));
+            if(!validator.isEmail(email)){
+                return next(customiError(400, "信箱格式錯誤"));
+            }
+            console.log(await User.findOne({"_id" : req.user._id}))
+            let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
+                $set : {
+                    name :  name,
+                    email : email,
+                }
+            });
+            successHandle(res, replaceData);
+        } catch(err) {
+            return next(customiError(400, err));
+        }
     }
 
 }

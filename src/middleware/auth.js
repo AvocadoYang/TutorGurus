@@ -5,15 +5,14 @@ const User = require('../models/userModel');
 
 let jwtFn = {
     //生成Token
-    jwtGenerating(userInfo, statudCode, res){
-        console.log(userInfo)
+    jwtGenerating(userInfo, res){
         //生成JWT
-        let jwtToken = jwt.sign({id : userInfo._id}, process.env.JWT_SECRET, {expiresIn : process.env.JWT_DAYS});
+        console.log(process.env.JWT_SECRET, process.env.JWT_DAYS)
+        let jwtToken = jwt.sign({id : userInfo["_id"]}, process.env.JWT_SECRET, {expiresIn : process.env.JWT_DAYS});
         successHandler(res, jwtToken);
     },
     //驗證Token
     async isAuth(req, res, next){
-        console.log(req.headers.authorization)
         let token;
         //驗證是否夾帶token
         if(req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
